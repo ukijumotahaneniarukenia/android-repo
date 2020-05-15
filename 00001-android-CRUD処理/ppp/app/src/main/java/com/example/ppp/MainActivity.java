@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app.R;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
         name = (EditText)findViewById(R.id.name);
         text = (TextView)findViewById(R.id.text);
 
-        realm = Realm.getDefaultInstance();
+        RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext()).name("myrealm.realm").build();
+        Realm.setDefaultConfiguration(config);
     }
 
     public void clickAction(View view){
