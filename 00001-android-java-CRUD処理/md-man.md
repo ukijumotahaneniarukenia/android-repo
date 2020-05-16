@@ -1,7 +1,7 @@
 エミュレータまわりのファイル
 
 ```
-kuraine docker-container-ubuntu-18-04-c-cpp-kdevelop ~$find / -type f 2>/dev/null | grep Android | grep emulator
+$find / -type f 2>/dev/null | grep Android | grep emulator
 /home/kuraine/Android/Sdk/sources/android-29/com/android/clockwork/emulator/EmulatorUtil.java
 /home/kuraine/Android/Sdk/platforms/android-29/data/res/drawable/emulator_circular_window_overlay.xml
 /home/kuraine/Android/Sdk/tools/emulator-check
