@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addRecord(){
+
+        Realm realm = Realm.getDefaultInstance();
+
         realm.beginTransaction();
 
         Student student = realm.createObject(Student.class);
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void viewRecord(){
+        Realm realm = Realm.getDefaultInstance();
+
         RealmResults<Student> results = realm.where(Student.class).findAll();
 
         text.setText("");
@@ -70,29 +75,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateRecord(){
-        RealmResults<Student> results = realm.where(Student.class).equalTo("roll_no", Integer.parseInt(roll_no.getText().toString())).findAll();
+        Realm realm = Realm.getDefaultInstance();
 
+        RealmResults<Student> students = realm.where(Student.class).equalTo("roll_no", Integer.parseInt(roll_no.getText().toString())).findAll();
         realm.beginTransaction();
 
-        for(Student student : results){
-            student.setName(name.getText().toString());
+        for (int i = 0; i < students.size(); i++) {
+            students.get(i).setName(name.getText().toString());
         }
-
         realm.commitTransaction();
+
     }
 
     public void deleteRecord(){
+        Realm realm = Realm.getDefaultInstance();
+
         RealmResults<Student> results = realm.where(Student.class).equalTo("roll_no", Integer.parseInt(roll_no.getText().toString())).findAll();
 
         realm.beginTransaction();
 
-        results.get(0).removeFromRealm();
+        results.get(0).removeFromRealm();//入力されたidに紐づくレコードを削除
 
         realm.commitTransaction();
     }
 
     @Override
     protected void onDestroy() {
+        Realm realm = Realm.getDefaultInstance();
+
         realm.close();
         super.onDestroy();
     }
