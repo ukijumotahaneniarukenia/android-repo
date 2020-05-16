@@ -356,11 +356,54 @@ Realm realm = Realm.getDefaultInstance();
 
 # 5.
 
-
 - 事象
+
+
+```
+05/15 18:09:09: Launching 'app' on Pixel 3a API 29.
+$ adb shell am start -n "com.example.ppp/com.example.ppp.MainActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+Connected to process 7076 on device 'Pixel_3a_API_29 [emulator-5554]'.
+
+
+
+18:11	Emulator: emulator: ERROR: VkCommonOperations.cpp:496: Failed to create Vulkan instance.
+
+18:11	Emulator: pulseaudio: pa_context_connect() failed
+
+18:11	Emulator: pulseaudio: Reason: Connection refused
+
+18:11	Emulator: pulseaudio: Failed to initialize PA contextaudio: Could not init `pa' audio driver
+
+18:11	Emulator: E0516 03:11:49.837703053    1679 socket_utils_common_posix.cc:201] check for SO_REUSEPORT: {"created":"@1589566309.837691738","description":"SO_REUSEPORT unavailable on compiling system","file":"/mnt/tmpfs/src/android/emu-master-dev/external/grpc/src/core/lib/iomgr/socket_utils_common_posix.cc","file_line":169}
+
+```
 
 - 原因
 
+
+ソケット通信周りだと思っているが、エミュレータは起動してくれいたので、一旦保留
+
+redditにも上がっていた
+
+- https://www.reddit.com/r/linux_gaming/comments/5tidzc/a_solution_for_pulseaudio_pa_context_connect/
+
 - 対策
 
+pulseaudioデーモンプロセスを一般ユーザーではなく、rootユーザーで起動しておく必要がある
+rootユーザーがソケットファイルを見つけることができないらしいから
+
+ということで一般ユーザーがsudo経由で
+
+```
+$sudo pulseaudio -D
+```
+
+のように起動しておくといいらしい
+
 - 予防
+
+dockerホストとdockerコンテナ側で、以下のファイルを共有すれば、うまく行くんじゃないかと思っている
+
+```
+/run/user/$ID/pulse/native
+```
