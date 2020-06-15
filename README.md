@@ -13,3 +13,9 @@
 - http://mixi-inc.github.io/AndroidTraining/fundamentals/2.01.create-layout.html
 
 - http://mixi-inc.github.io/AndroidTraining/advanced/3.03.advanced-layout.html
+
+
+データベース
+
+- https://realm.io/docs/java/latest/
+
